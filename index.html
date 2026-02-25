@@ -1,4 +1,186 @@
-Why did the  chicken cross the road?
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Te Amo Animation</title>
+<style>
+  /* --- Base Styles --- */
+  body {
+    margin: 0;
+    background: #0f0c29;
+    color: white;
+    font-family: monospace;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+  }
 
+  /* --- Top Animation Scene --- */
+  .scene {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    background: radial-gradient(circle at bottom, #3b154d, #0b071a);
+    overflow: hidden;
+  }
 
-THia is the risky joke 
+  /* Little characters at the bottom corners */
+  .character {
+    position: absolute;
+    bottom: 20px;
+    font-size: 3rem;
+  }
+  .character.left { left: 20px; }
+  .character.right { right: 20px; transform: scaleX(-1); }
+
+  /* Floating text and heart */
+  .message-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    text-align: center;
+    opacity: 0; /* Hidden initially */
+    transition: opacity 2s ease-in, transform 2s ease-out;
+  }
+  
+  .message-container.show {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .text {
+    font-size: 3rem;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #ff6b81;
+    text-shadow: 0 0 15px rgba(255, 107, 129, 0.8);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+
+  .heart {
+    font-size: 5rem;
+    color: #ff3366;
+    animation: pulse 1s infinite alternate;
+    text-shadow: 0 0 20px #ff3366;
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  /* --- Bottom Code Editor --- */
+  .code-editor {
+    width: 90%;
+    max-width: 400px;
+    background: #0d1117;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: -30px;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    border: 1px solid #30363d;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+
+  .dots span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  .dots .red { background: #ff5f56; }
+  .dots .yellow { background: #ffbd2e; }
+  .dots .green { background: #27c93f; }
+
+  .title { color: #8b949e; font-size: 0.85rem; font-family: sans-serif; }
+
+  pre {
+    margin: 0;
+    color: #79c0ff; /* Code color */
+    font-size: 1rem;
+    line-height: 1.6;
+    height: 180px;
+    white-space: pre-wrap;
+  }
+  .cursor { animation: blink 1s step-end infinite; color: white; }
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+</head>
+<body>
+
+  <div class="scene">
+    <div class="character left">🐱</div>
+    <div class="character right">🐱</div>
+    
+    <div class="message-container" id="message">
+      <div class="text">HELLO ICBT</div>
+      <div class="heart">🌷</div>
+    </div>
+  </div>
+
+  <div class="code-editor">
+    <div class="header">
+      <div class="dots"><span class="red"></span><span class="yellow"></span><span class="green"></span></div>
+      <div class="title">Style.css</div>
+    </div>
+    <pre><code id="typing-code"></code><span class="cursor">|</span></pre>
+  </div>
+
+  <script>
+    const codeLines = [
+      ".Love_You {",
+      "  position: absolute;",
+      "  width: 90%;",
+      "  font-size: 2rem;",
+      "  content: 'Te Amo';",
+      "  transform: translateX(-50%);",
+      "}"
+    ];
+
+    let currentLine = 0;
+    let currentChar = 0;
+    const codeElement = document.getElementById('typing-code');
+    const messageContainer = document.getElementById('message');
+
+    function typeCode() {
+      if (currentLine < codeLines.length) {
+        if (currentChar < codeLines[currentLine].length) {
+          codeElement.innerHTML += codeLines[currentLine].charAt(currentChar);
+          currentChar++;
+          setTimeout(typeCode, 40); // Typing speed
+        } else {
+          codeElement.innerHTML += '\n';
+          currentLine++;
+          currentChar = 0;
+          setTimeout(typeCode, 200); // Pause at end of line
+        }
+      } else {
+        // Trigger the visual animation once typing finishes
+        setTimeout(() => {
+          messageContainer.classList.add('show');
+        }, 500);
+      }
+    }
+
+    // Start typing effect on load
+    window.onload = typeCode;
+  </script>
+
+</body>
+</html>
