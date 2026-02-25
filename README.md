@@ -1,6 +1,1 @@
-Why did the  chicken cross the road?
-
-
-THia is the risky joke 
-
 Why don’t programmers like nature? Because it has too many bugs.
